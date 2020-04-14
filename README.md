@@ -1,5 +1,11 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## The hunt engine
+
+I wanted to see if I could make a hunt framework that lazy-loaded puzzle data aggressively enough that a determined hacker couldn't even deduce the existence of locked puzzles, while still allowing a React-style single-page app. As a bonus, this format would also allow the hunt to be run normally, with unlocks and everything, after the official hunt was over, by reimplementing the unlock logic in javascript and storing the hunt state as a cookie. To that end, this prototype defines an interface in engine/interface.tsx that is the abstract of what a server would need to provide, and then a JS implementation of this in engine/js_engine.tsx so that you can run the hunt right here in your browser - it's up at https://dplepage.github.io/puzzle-poc/
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

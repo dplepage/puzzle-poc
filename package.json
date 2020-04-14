@@ -1,6 +1,7 @@
 {
   "name": "react-puzzles",
   "version": "0.1.0",
+  "homepage": "http://dplepage.github.io/puzzle-poc",
   "private": true,
   "dependencies": {
     "@reactivex/rxjs": "^6.5.5",
