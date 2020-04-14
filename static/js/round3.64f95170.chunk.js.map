@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/round3.tsx"],"names":["GenericRound"],"mappings":"qHAAA,mBAEeA,YAAf","file":"static/js/round3.64f95170.chunk.js","sourcesContent":["import { GenericRound } from '../components';\n\nexport default GenericRound\n"],"sourceRoot":""}
