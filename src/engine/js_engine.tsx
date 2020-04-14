@@ -33,13 +33,16 @@ const hunt: Record<Slug, ViewStructure> = {
    label: "The Start",
    load_puzzles: {
      round1: {
-       image: "/round1.man.png",
+       image: "./round1.man.png",
+       img_alt: "A Man",
      },
      round2: {
-       image: "/round2.plan.gif",
+       image: "./round2.plan.gif",
+       img_alt: "A Plan",
      },
      round3: {
-       image: "/round3.canal.jpg",
+       image: "./round3.canal.jpg",
+       img_alt: "A Canal",
      }
    },
   }),

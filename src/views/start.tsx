@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ViewProps } from '../engine/interface';
 import { FlexBox } from '../components';
 
-// import x from "./round1.man.png";
+
+function DynamicImage({src, alt}:{src:string, alt:string}) {
+  const [img, setImg] = useState<React.ReactElement>(<span/>);
+  useEffect(()=>{
+    // I don't entirely understand why ''+src works when just src doesn't
+    // I think it's some sort of webpack special case
+    import(''+src).then((mod)=>{
+      setImg(<img src={mod.default} alt={alt} width="200px"/>)
+    })
+  }, [])
+  return img
+}
+
 function Component({ data }: ViewProps) {
   return <div>
     <h1>Welcome to the hunt!</h1>
@@ -26,10 +38,16 @@ function Component({ data }: ViewProps) {
       {data.children.map((item: any) =>
         <FlexBox dir="column" lined key={item.slug}>
           <Link to={item.slug}>
-            <img src={item.image} alt="A man" width="200px" /><br />
-            <label>{item.label}</label>
-            {item.state.has_answers() ? <><br/><label>Answer: {item.state.answer_str()}</label></> : ""}
+            <DynamicImage src={item.image} alt={item.img_alt}/>
           </Link>
+          <div style={{margin:"auto"}}>
+            <Link to={item.slug}>
+              <label>{item.label}</label>
+            </Link>
+          </div>
+          <div style={{margin:"auto"}}>
+            {item.state.has_answers() ? <label>Answer: {item.state.answer_str()}</label> : ""}
+          </div>
         </FlexBox>
       )}
     </FlexBox>
