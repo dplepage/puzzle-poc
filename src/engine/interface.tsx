@@ -27,6 +27,9 @@ export interface ViewData extends Record<string, any> {
   state: ViewState,
 }
 
+// Weird things happen when you use useState with actual react components, so
+// it's easier to return a module with .default and just use that.
+export type ViewModule = {default:React.ComponentType<ViewProps>}
 
 // To make the actual hunt we'd implement this interface as a wrapper around a
 // server; to make the hunt playable after the fact, we'd reimplement the hunt
@@ -36,6 +39,7 @@ export interface PuzzleEngine {
   unlocked(slug: Slug): Promise<boolean>
   get_data<T>(slug: Slug): Promise<ViewData>
   get_nav(): Promise<NavEntry[]>
+  get_component(slug: Slug): Promise<ViewModule>
   version(): number
 }
 

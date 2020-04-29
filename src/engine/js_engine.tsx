@@ -1,4 +1,6 @@
-import { Slug, ViewState, NavEntry, ViewData, PuzzleEngine } from './interface';
+import React from 'react';
+import { Slug, ViewState, ViewProps, NavEntry, ViewData, PuzzleEngine } from './interface';
+import { Battle, Stage, stages } from './pokemon'
 
 interface PuzzleState {
   unlocked: boolean
@@ -33,15 +35,15 @@ const hunt: Record<Slug, ViewStructure> = {
    label: "The Start",
    load_puzzles: {
      round1: {
-       image: "./round1.man.png",
+       image: "./views/round1.man.png",
        img_alt: "A Man",
      },
      round2: {
-       image: "./round2.plan.gif",
+       image: "./views/round2.plan.gif",
        img_alt: "A Plan",
      },
      round3: {
-       image: "./round3.canal.jpg",
+       image: "./views/round3.canal.jpg",
        img_alt: "A Canal",
      }
    },
@@ -92,6 +94,120 @@ const hunt: Record<Slug, ViewStructure> = {
   puzz3_2: new ViewStructure({
    label: "The Final Puzzle Two",
   }),
+  pokemon: new ViewStructure({
+    label: "Pokémon Island",
+  }),
+  'pokemon-advertiser-trainer': new ViewStructure({
+    label: 'Advertiser Trainer',
+    unlocks: ['pokemon-scouts-trainer'],
+  }),
+  'pokemon-scouts-trainer': new ViewStructure({
+    label: 'Scouts Trainer',
+    unlocks: ['pokemon-taxonomist-trainer'],
+  }),
+  'pokemon-taxonomist-trainer': new ViewStructure({
+    label: 'Taxonomist Trainer',
+    unlocks: ['pokemon-rattata'],
+  }),
+  'pokemon-rattata': new ViewStructure({
+    label: 'Rattata',
+    unlocks: ['pokemon-raticate'],
+  }),
+  'pokemon-raticate': new ViewStructure({
+    label: 'Raticate',
+    unlocks: ['pokemon-cranidos'],
+  }),
+  'pokemon-cranidos': new ViewStructure({
+    label: 'Cranidos',
+    unlocks: ['pokemon-rampardos'],
+  }),
+  'pokemon-rampardos': new ViewStructure({
+    label: 'Rampardos',
+    unlocks: ['pokemon-charmander'],
+  }),
+  'pokemon-charmander': new ViewStructure({
+    label: 'Charmander',
+    unlocks: ['pokemon-charmeleon'],
+  }),
+  'pokemon-charmeleon': new ViewStructure({
+    label: 'Charmeleon',
+    unlocks: ['pokemon-yamask'],
+  }),
+  'pokemon-yamask': new ViewStructure({
+    label: 'Yamask',
+    unlocks: ['pokemon-cofagrigus'],
+  }),
+  'pokemon-cofagrigus': new ViewStructure({
+    label: 'Cofagrigus',
+    unlocks: ['pokemon-dratini'],
+  }),
+  'pokemon-dratini': new ViewStructure({
+    label: 'Dratini',
+    unlocks: ['pokemon-dragonair'],
+  }),
+  'pokemon-dragonair': new ViewStructure({
+    label: 'Dragonair',
+    unlocks: ['pokemon-squirtle'],
+  }),
+  'pokemon-squirtle': new ViewStructure({
+    label: 'Squirtle',
+    unlocks: ['pokemon-wartortle'],
+  }),
+  'pokemon-wartortle': new ViewStructure({
+    label: 'Wartortle',
+    unlocks: ['pokemon-meowth'],
+  }),
+  'pokemon-meowth': new ViewStructure({
+    label: 'Meowth',
+    unlocks: ['pokemon-persian'],
+  }),
+  'pokemon-persian': new ViewStructure({
+    label: 'Persian',
+    unlocks: ['pokemon-rockruff'],
+  }),
+  'pokemon-rockruff': new ViewStructure({
+    label: 'Rockruff',
+    unlocks: ['pokemon-lycanroc'],
+  }),
+  'pokemon-lycanroc': new ViewStructure({
+    label: 'Lycanroc',
+    unlocks: ['pokemon-ponyta'],
+  }),
+  'pokemon-ponyta': new ViewStructure({
+    label: 'Ponyta',
+    unlocks: ['pokemon-rapidash'],
+  }),
+  'pokemon-rapidash': new ViewStructure({
+    label: 'Rapidash',
+    unlocks: ['pokemon-duskull'],
+  }),
+  'pokemon-duskull': new ViewStructure({
+    label: 'Duskull',
+    unlocks: ['pokemon-dusclops'],
+  }),
+  'pokemon-dusclops': new ViewStructure({
+    label: 'Dusclops',
+    unlocks: ['pokemon-bagon'],
+  }),
+  'pokemon-bagon': new ViewStructure({
+    label: 'Bagon',
+    unlocks: ['pokemon-shelgon'],
+  }),
+  'pokemon-shelgon': new ViewStructure({
+    label: 'Shelgon',
+    unlocks: ['pokemon-krabby'],
+  }),
+  'pokemon-krabby': new ViewStructure({
+    label: 'Krabby',
+    unlocks: ['pokemon-kingler'],
+  }),
+  'pokemon-kingler': new ViewStructure({
+    label: 'Kingler',
+    unlocks: ['pokemon-rival'],
+  }),
+  'pokemon-rival': new ViewStructure({
+    label: 'Rival',
+  }),
 }
 
 function is_answer(slug:Slug, answer:string) {
@@ -140,7 +256,7 @@ function resolve_round_data(slug: Slug, hunt_state: HuntState): ViewData {
   });
   const vstate = hunt_state.get_vstate(slug)
   // /start doesn't get an answer
-  if (!slug.startsWith("round"))
+  if (slug==="start")
     vstate.can_submit = false
   return {
     label: hunt[slug].label,
@@ -164,7 +280,6 @@ export class JsPuzzleEngine implements PuzzleEngine {
     return this._version
   }
   async unlocked(slug: Slug) {
-    if (slug === "nav") return true;
     return this.hunt_state.get_state(slug).unlocked;
   }
   private async unlock(slug: Slug) {
@@ -194,19 +309,57 @@ export class JsPuzzleEngine implements PuzzleEngine {
       }
       result.push(r)
     }
+    const pokepuzz = []
+    for (const slug of Object.keys(hunt)) {
+      if (!slug.startsWith("pokemon-"))
+        continue
+      if (!await this.unlocked(slug)) continue;
+      pokepuzz.push({
+        label: hunt[slug].label,
+        slug: slug,
+        state: this.hunt_state.get_vstate(slug),
+        children: []
+      })
+    }
+    result.push({
+      label: hunt['pokemon'].label,
+      slug: 'pokemon',
+      state: this.hunt_state.get_vstate('pokemon'),
+      children: pokepuzz
+    })
     return result
   }
   async get_data(slug: Slug) {
-    if (slug === 'nav') {
-      // abuse the puzzle data mechanism to get the hack nav data
-      const nav_data = await this.get_nav()
+    if (slug==="pokemon") {
+      const s = this.hunt_state.get_vstate(slug)
+      const visible_stages: Stage[] = [];
+      for (const stage of stages) {
+        let battles: Battle[] = [];
+        for (const battle of stage.battles) {
+          if (await this.unlocked(battle.slug)) {
+            const s = this.hunt_state.get_vstate(battle.slug)
+            console.log("ANSWER:", s.answer_str())
+            battles.push({
+              ...battle,
+              answer: s.answer_str(),
+            })
+            console.log("SO:", battles[battles.length-1].answer)
+          }
+        }
+        if (battles.length > 0) {
+          visible_stages.push({
+            bg: stage.bg,
+            battles: battles
+          })
+        }
+      }
       return {
-        label: "N/A",
-        state: new ViewState(false),
-        nav_entries: nav_data,
+        label: hunt["pokemon"].label,
+        state: s,
+        stages: visible_stages,
       }
     }
-    if (slug.startsWith("puzz")) {
+    if (slug.startsWith("puzz") || slug.startsWith("pokemon-")) {
       const s = this.hunt_state.get_vstate(slug)
       return {
         label: hunt[slug].label,
@@ -214,6 +367,15 @@ export class JsPuzzleEngine implements PuzzleEngine {
       };
     }
     return resolve_round_data(slug, this.hunt_state);
+  }
+  async get_component(slug:Slug) {
+    if (slug.startsWith("pokemon-")) {
+      return {
+        default: () => <div>The pokemon puzzles are hard-coded to this single div.</div>
+      }
+    }
+    const mod = await import(/* webpackChunkName: "[request]" */ `../views/${slug}`)
+    return mod
   }
   async submit(slug: Slug, value: string) {
     if (!is_answer(slug, value))
@@ -237,6 +399,8 @@ export class JsPuzzleEngine implements PuzzleEngine {
     this.unlock("start")
     this.unlock("round1")
     this.unlock("puzz1_1")
+    this.unlock("pokemon")
+    this.unlock("pokemon-advertiser-trainer")
     for (const slug of Object.keys(hunt)) {
       if (this.hunt_state.get_state(slug).answers.length){
         this.unlock(slug)

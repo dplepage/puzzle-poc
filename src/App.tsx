@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, FormEvent } from 'react';
+import React, { useState, FunctionComponent, FormEvent } from 'react';
 import {
   HashRouter as Router,
   Switch,
@@ -6,61 +6,19 @@ import {
   Link,
   useParams,
 } from "react-router-dom";
-import { FlexBox } from './components';
-import { PuzzleEngine, Slug, NavEntry, ViewData } from './engine/interface';
+import { Layout, Menu, Typography } from 'antd';
+// import {
+//   LockOutlined, UnlockOutlined
+// } from '@ant-design/icons';
+
+// import { Show } from './components';
+import { PuzzleEngine, Slug, ViewData, ViewModule } from './engine/interface';
 import { JsPuzzleEngine } from './engine/js_engine';
+import 'antd/dist/antd.css';
+import {useLoading} from './loading';
+import HackNav from './hack_nav';
 
-type loadState = "loading" | "404" | "loaded";
-
-function useData(engine:PuzzleEngine, slug:Slug, version:number):[ViewData|null, loadState] {
-  // React hook to load the latest data; reloads if you change the slug OR the
-  // version number (thus, data is reloaded when e.g. you submit an answer).
-  // This could probably be merged with useView with fairly minimal effort, this
-  // is just a proof-of-concept.
-  const [data, setData] = useState<ViewData|null>(null);
-  const [state, setState] = useState<loadState>("loading");
-  useEffect(()=>{
-    async function load_data() {
-      setState("loading");
-      const unlocked = await engine.unlocked(slug)
-      if (!unlocked) {
-        setState("404")
-        return
-      }
-      const data = await engine.get_data(slug);
-      window.console.log(`Loaded data for ${slug} at version ${version}`)
-      setData(data)
-      setState("loaded")
-    }
-    load_data();
-  }, [engine, slug, version]);
-  return [data, state];
-}
-
-function useView(engine:PuzzleEngine, slug:Slug) {
-  // React hook to load the view for a slug dynamically.
-  // TODO: This doesn't reload on unlocks, so if you go to a puzzle slug before
-  // it's unlocked and then unlock it, it'll still show as a 404 until you
-  // navigate away and back again
-  const [view, setView] = useState<any>(null);
-  const [state, setState] = useState<loadState>("loading");
-  useEffect(()=>{
-    async function load_data() {
-      setState("loading");
-      const unlocked = await engine.unlocked(slug)
-      if (!unlocked) {
-        setState("404")
-        return
-      }
-      const view = await import(/* webpackChunkName: "[request]" */ `./views/${slug}`);
-      window.console.log(`Loaded view for ${slug}`)
-      setView(view)
-      setState("loaded")
-    }
-    load_data();
-  }, [engine, slug]);
-  return [view, state];
-}
+const { Header, Content, Footer } = Layout;
 
 type SubmitProps = {slug:string, engine:PuzzleEngine, vdata:ViewData}
 const PuzzleHeader = ({slug, engine, vdata}:SubmitProps) => {
@@ -106,13 +64,22 @@ export const PuzzleViewFromSlug:FunctionComponent<{engine:PuzzleEngine, version:
   // intended for use with a Router, which is why it gets the slug from
   // useParams instead of as an argument.
   const { slug } = useParams<{ slug: Slug }>()
-  const [data, dstate] = useData(engine, slug, version);
-  const [view_module, vstate] = useView(engine, slug);
-  const loading_div = <div>Loading...</div>
-  if (dstate === "404" || vstate === "404")
+  // We pass version and slug when loading data but only slug when loading the
+  // component, because we don't need to reload the component every time the
+  // data changes (but we do want to reload the data, obviously). This'll change
+  // if we want to switch to e.g. make both of these Observables
+  const [data, dstate] = useLoading(()=>engine.get_data(slug), [slug, version]);
+  const [view_module, vstate] = useLoading<ViewModule>(()=>engine.get_component(slug), [slug]);
+  if (dstate === "error" || vstate === "error")
     return <b>404 - there's nothing here (or you haven't unlocked it yet!)</b>
-  if (data === null || vstate === "loading"){
-    return loading_div
+  // We check vstate === "loading" instead of view_module === null because when
+  // you change the slug both state non-null during the reload, so if the data
+  // loads first we need to make sure not to try to render the old view with the
+  // new data. TODO: is there a race condition the other way? If the view
+  // finishes loading but the data takes a while, will we break? We could fix
+  // this by putting the slug in the data, maybe?
+  if (data === null || vstate === "loading" || view_module === null || dstate === "loading"){
+    return <div>Loading...</div>
   }
   return <>
     <PuzzleHeader slug={slug} engine={engine} vdata={data}/>
@@ -120,59 +87,30 @@ export const PuzzleViewFromSlug:FunctionComponent<{engine:PuzzleEngine, version:
    </>
 }
 
+
 function App() {
-  const [tmp, setTmp] = useState(0)
-  const [engine] = useState(new JsPuzzleEngine(setTmp));
-  const [nav_data] = useData(engine, "nav", tmp);
-  if (nav_data === null)
-    return <div>Loading...</div>
-  const nav:NavEntry[] = nav_data.nav_entries
+  const [version, setVersion] = useState(0)
+  const [engine] = useState(new JsPuzzleEngine(setVersion));
 
-  const RenderPuzzleNav: FunctionComponent<{puzzle:ViewData, indent?:boolean}> = ({puzzle, indent}) => {
-    let label = puzzle.label
-    if (puzzle.state.has_answers())
-      label += ' - '+puzzle.state.answer_str()
-    if (indent)
-      label = '> '+label
-    return <Link to={`/hunt/${puzzle.slug}`}>
-      {label}
-    </Link>
-  }
-
-  return (
-    <Router>
-      <FlexBox dir="row">
-        <Link to="/">Home</Link>&nbsp;
-        <Link to="/about">About</Link>&nbsp;
-        <Link to="/hunt/start">Hunt</Link>
-      </FlexBox>
-      <FlexBox dir="row">
-        <div style={{width:"200px", padding:"10px", margin:"10px", background:"lightgrey"}}>
-          <h3>Hack Navigation</h3>
-          <button onClick={()=>engine.unlock_all()}>Unlock all</button>
-          <button onClick={()=>engine.unlock_restart()}>Relock unsolved</button>
-          <FlexBox dir="column">
-            <Link to="/hunt/start">Start</Link>
-            {nav.map((round)=> <React.Fragment key={`nav-${round.slug}`}>
-              <RenderPuzzleNav puzzle={round}/>
-              {round.children.map((puzzle)=>
-                <span key={`nav-${puzzle.slug}`}>
-                  <RenderPuzzleNav puzzle={puzzle} indent/>
-                </span>
-                )}
-                <hr/>
-              </React.Fragment>
-            )}
-          </FlexBox>
-        </div>
-        <div style={{maxWidth:"600px"}}>
+  return <Router>
+    <Layout>
+      <HackNav engine={engine} version={version}/>
+      <Layout>
+        <Header>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+            <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
+            <Menu.Item key="2"><Link to="/about">About</Link></Menu.Item>
+            <Menu.Item key="3"><Link to="/hunt/start">Hunt</Link></Menu.Item>
+          </Menu>
+        </Header>
+        <Content style={{ padding: '0 50px', marginTop: 64 }}>
           <Switch>
             <Route path="/about">
               <h2> About This Hunt </h2>
               How about this hunt, eh?
             </Route>
             <Route path="/hunt/:slug">
-              <PuzzleViewFromSlug engine={engine} version={tmp}/>
+              <PuzzleViewFromSlug engine={engine} version={version}/>
             </Route>
             <Route path="/">
               <h2>Welcome to the hunt!</h2>
@@ -204,14 +142,13 @@ function App() {
               puzzles, and most of them will just accept any answer you provide
               as the right one.
               </p>
-
-
             </Route>
           </Switch>
-        </div>
-      </FlexBox>
-    </Router>
-  );
+        </Content>
+        <Footer> (Do we need a footer? Here's one.) </Footer>
+      </Layout>
+    </Layout>
+  </Router>
 }
 
 export default App;

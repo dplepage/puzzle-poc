@@ -1,20 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ViewProps } from '../engine/interface';
-import { FlexBox } from '../components';
-
-
-function DynamicImage({src, alt}:{src:string, alt:string}) {
-  const [img, setImg] = useState<React.ReactElement>(<span/>);
-  useEffect(()=>{
-    // I don't entirely understand why ''+src works when just src doesn't
-    // I think it's some sort of webpack special case
-    import(''+src).then((mod)=>{
-      setImg(<img src={mod.default} alt={alt} width="200px"/>)
-    })
-  }, [])
-  return img
-}
+import { DynamicImage } from '../loading';
+import { Space, Card } from 'antd';
 
 function Component({ data }: ViewProps) {
   return <div>
@@ -34,9 +22,9 @@ function Component({ data }: ViewProps) {
     'round2.' until you'd unlocked round 2, so even if somehow you guessed the
     name of that file you wouldn't be able to load it.</p>
 
-    <FlexBox dir="row">
+    <Space direction="horizontal">
       {data.children.map((item: any) =>
-        <FlexBox dir="column" lined key={item.slug}>
+        <Card key={item.slug} title={item.label}>
           <Link to={item.slug}>
             <DynamicImage src={item.image} alt={item.img_alt}/>
           </Link>
@@ -48,9 +36,9 @@ function Component({ data }: ViewProps) {
           <div style={{margin:"auto"}}>
             {item.state.has_answers() ? <label>Answer: {item.state.answer_str()}</label> : ""}
           </div>
-        </FlexBox>
+        </Card>
       )}
-    </FlexBox>
+    </Space>
   </div>
 }
 
