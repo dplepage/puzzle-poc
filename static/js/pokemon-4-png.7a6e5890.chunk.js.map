@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/4.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-4-png.7a6e5890.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/4.48cfb7f1.png\";"],"sourceRoot":""}

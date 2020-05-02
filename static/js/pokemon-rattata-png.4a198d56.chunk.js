@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[44],{201:function(t,p,a){t.exports=a.p+"static/media/rattata.694fd111.png"}}]);
+//# sourceMappingURL=pokemon-rattata-png.4a198d56.chunk.js.map

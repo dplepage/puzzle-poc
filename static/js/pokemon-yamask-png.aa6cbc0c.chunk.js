@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[53],{210:function(a,p,s){a.exports=s.p+"static/media/yamask.dfaa4388.png"}}]);
+//# sourceMappingURL=pokemon-yamask-png.aa6cbc0c.chunk.js.map

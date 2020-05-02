@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/duskull.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-duskull-png.522b9cab.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/duskull.4096258e.png\";"],"sourceRoot":""}

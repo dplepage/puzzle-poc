@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[52],{209:function(p,t,e){p.exports=e.p+"static/media/wartortle.19f84696.png"}}]);
+//# sourceMappingURL=pokemon-wartortle-png.2826ca65.chunk.js.map

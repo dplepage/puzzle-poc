@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[50],{207:function(t,e,p){t.exports=p.p+"static/media/taxonomist-trainer.5a9ef713.png"}}]);
+//# sourceMappingURL=pokemon-taxonomist-trainer-png.3ce77994.chunk.js.map

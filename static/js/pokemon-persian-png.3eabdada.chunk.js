@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[39],{196:function(p,e,s){p.exports=s.p+"static/media/persian.cab59e1f.png"}}]);
+//# sourceMappingURL=pokemon-persian-png.3eabdada.chunk.js.map

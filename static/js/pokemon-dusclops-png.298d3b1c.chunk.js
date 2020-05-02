@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[33],{190:function(p,s,c){p.exports=c.p+"static/media/dusclops.c8dd5c54.png"}}]);
+//# sourceMappingURL=pokemon-dusclops-png.298d3b1c.chunk.js.map

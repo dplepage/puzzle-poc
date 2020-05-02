@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/cofagrigus.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-cofagrigus-png.73f3e6e9.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/cofagrigus.63a0fd21.png\";"],"sourceRoot":""}

@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[49],{206:function(p,s,e){p.exports=e.p+"static/media/squirtle.25f17999.png"}}]);
+//# sourceMappingURL=pokemon-squirtle-png.2022f211.chunk.js.map

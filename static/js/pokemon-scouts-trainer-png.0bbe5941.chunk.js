@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[47],{204:function(s,e,p){s.exports=p.p+"static/media/scouts-trainer.2e11b13b.png"}}]);
+//# sourceMappingURL=pokemon-scouts-trainer-png.0bbe5941.chunk.js.map

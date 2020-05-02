@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/ponyta.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-ponyta-png.7e4672c9.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/ponyta.5e067247.png\";"],"sourceRoot":""}

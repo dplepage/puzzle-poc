@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[57],{213:function(p,s,a){p.exports=a.p+"static/media/round3.canal.d1b87766.jpg"}}]);
+//# sourceMappingURL=round3-canal-jpg.f3d1cdee.chunk.js.map

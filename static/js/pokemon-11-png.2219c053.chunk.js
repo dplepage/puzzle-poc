@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[13],{171:function(p,s,e){p.exports=e.p+"static/media/11.19247c57.png"}}]);
+//# sourceMappingURL=pokemon-11-png.2219c053.chunk.js.map

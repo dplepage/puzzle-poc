@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[46],{203:function(p,s,e){p.exports=e.p+"static/media/rockruff.7bfd67a7.png"}}]);
+//# sourceMappingURL=pokemon-rockruff-png.06bbc1be.chunk.js.map

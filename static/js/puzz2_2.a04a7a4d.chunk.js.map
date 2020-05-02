@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/puzz2_2.tsx"],"names":["Component"],"mappings":"qHAAA,2BAMeA,UAJf,WACE,OAAO","file":"static/js/puzz2_2.a04a7a4d.chunk.js","sourcesContent":["import React from 'react';\n\nfunction Component() {\n  return <b>This is a puzzle!</b>\n}\n\nexport default Component;\n"],"sourceRoot":""}

@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[41],{198:function(p,s,a){p.exports=a.p+"static/media/rampardos.8184b16d.png"}}]);
+//# sourceMappingURL=pokemon-rampardos-png.9e4708f1.chunk.js.map

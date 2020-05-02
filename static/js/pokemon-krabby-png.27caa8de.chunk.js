@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[36],{193:function(p,s,e){p.exports=e.p+"static/media/krabby.3d1c930b.png"}}]);
+//# sourceMappingURL=pokemon-krabby-png.27caa8de.chunk.js.map

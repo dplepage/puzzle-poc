@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[40],{197:function(p,e,s){p.exports=s.p+"static/media/ponyta.5e067247.png"}}]);
+//# sourceMappingURL=pokemon-ponyta-png.7e4672c9.chunk.js.map

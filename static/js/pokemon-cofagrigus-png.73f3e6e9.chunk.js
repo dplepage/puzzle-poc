@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[29],{186:function(p,s,a){p.exports=a.p+"static/media/cofagrigus.63a0fd21.png"}}]);
+//# sourceMappingURL=pokemon-cofagrigus-png.73f3e6e9.chunk.js.map

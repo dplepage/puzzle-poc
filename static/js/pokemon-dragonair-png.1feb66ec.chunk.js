@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[31],{188:function(e,p,a){e.exports=a.p+"static/media/dragonair.ea55c5e7.png"}}]);
+//# sourceMappingURL=pokemon-dragonair-png.1feb66ec.chunk.js.map

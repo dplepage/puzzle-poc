@@ -1,0 +1,2 @@
+(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[35],{192:function(p,e,s){p.exports=s.p+"static/media/kingler.54641417.png"}}]);
+//# sourceMappingURL=pokemon-kingler-png.34f14628.chunk.js.map

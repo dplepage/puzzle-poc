@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/2.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-2-png.6ba4442d.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/2.307046d4.png\";"],"sourceRoot":""}

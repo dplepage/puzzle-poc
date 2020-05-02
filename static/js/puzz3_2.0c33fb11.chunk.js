@@ -1,2 +1,0 @@
-(this["webpackJsonpreact-puzzles"]=this["webpackJsonpreact-puzzles"]||[]).push([[5],{34:function(e,t,s){"use strict";s.r(t);var n=s(0),u=s.n(n);t.default=function(){return u.a.createElement("b",null,"This is a puzzle!")}}}]);
-//# sourceMappingURL=puzz3_2.0c33fb11.chunk.js.map

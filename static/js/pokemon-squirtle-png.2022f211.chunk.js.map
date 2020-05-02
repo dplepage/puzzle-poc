@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/squirtle.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-squirtle-png.2022f211.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/squirtle.25f17999.png\";"],"sourceRoot":""}

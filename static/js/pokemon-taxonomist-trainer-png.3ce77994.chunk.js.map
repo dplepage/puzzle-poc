@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/pokemon/taxonomist-trainer.png"],"names":["module","exports"],"mappings":"0GAAAA,EAAOC,QAAU,IAA0B","file":"static/js/pokemon-taxonomist-trainer-png.3ce77994.chunk.js","sourcesContent":["module.exports = __webpack_public_path__ + \"static/media/taxonomist-trainer.5a9ef713.png\";"],"sourceRoot":""}
